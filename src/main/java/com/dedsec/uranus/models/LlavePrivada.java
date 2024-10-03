@@ -15,6 +15,6 @@ public class LlavePrivada {
     private Long idLlavePrivada;
 
     @Lob
-    @Column(name = "Llave", nullable = false)
+    @Column(name = "Llave", nullable = false, columnDefinition = "TEXT")
     private String llave;
 }

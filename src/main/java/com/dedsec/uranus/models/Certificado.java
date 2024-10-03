@@ -15,7 +15,7 @@ public class Certificado {
     private Long idCertificado;
 
     @Lob
-    @Column(name = "Certificado_x509", nullable = false)
+    @Column(name = "Certificado_x509", nullable = false, columnDefinition = "TEXT")
     private String certificadoX509;
 
     @ManyToOne

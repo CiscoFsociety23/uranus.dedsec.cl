@@ -21,7 +21,7 @@ public class SolicitudCertificado {
     private String correo;
 
     @Lob
-    @Column(name = "CSR", nullable = false)
+    @Column(name = "CSR", nullable = false, columnDefinition = "TEXT")
     private String csr;
 
     @ManyToOne
