@@ -37,6 +37,7 @@ jobs:
             spring.datasource.password=${{ secrets.DB_URANUS_PASSWORD }}
             spring.jpa.show-sql=false
             spring.jpa.hibernate.ddl-auto=update
+            spring.datasource.hikari.maximum-pool-size=1
             " > ./src/main/resources/application.properties
 
       - name: Construyendo WAR
