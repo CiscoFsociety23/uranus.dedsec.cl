@@ -20,7 +20,7 @@ public class CertificadosService {
     private final CertificadoRepository certificadoRepository;
 
     public List<Certificado> obtenerCertificados(){
-        logger.info("[METHOD: obtenerCertificados() ]: Obteniendo listado de certificados");
+        logger.info("[ METHOD: obtenerCertificados() ]: Obteniendo listado de certificados");
         return certificadoRepository.findAll();
     }
 
