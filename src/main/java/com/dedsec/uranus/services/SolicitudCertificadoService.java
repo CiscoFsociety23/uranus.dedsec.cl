@@ -22,13 +22,13 @@ public class SolicitudCertificadoService {
     private CSRGenerator csrGenerator = new CSRGenerator();
 
     public List<SolicitudCertificado> obtenerSolicitudesCertificados(){
-        logger.info("[METHOD: obtenerSolicitudesCertificados() ]: Obteniendo listado de solicitudes CSR");
+        logger.info("[ METHOD: obtenerSolicitudesCertificados() ]: Obteniendo listado de solicitudes CSR");
         return solicitudCertificadoRepository.findAll();
     }
 
     public void generarCSR(LlavePrivada llave, String nombre, String email){
         try {
-            logger.info("[METHOD: generarCSR() ]: Solicitando CSR para " + email);
+            logger.info("[ METHOD: generarCSR() ]: Solicitando CSR para " + email);
             String privateKey = llave.getLlave();
             String csr = csrGenerator.generarCSR(privateKey, nombre, email);
             SolicitudCertificado solicitudCertificado = new SolicitudCertificado();
@@ -36,7 +36,7 @@ public class SolicitudCertificadoService {
             solicitudCertificado.setCorreo(email);
             solicitudCertificado.setCsr(csr);
             solicitudCertificado.setLlavePrivada(llave);
-            logger.info("[METHOD: generarCSR() ]: Guardando CSR");
+            logger.info("[ METHOD: generarCSR() ]: Guardando CSR");
             solicitudCertificadoRepository.save(solicitudCertificado);
         } catch (Exception e) {
             e.printStackTrace();

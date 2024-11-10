@@ -11,18 +11,18 @@ public class RSAKeyGenerator {
 
     public String genRSA() throws Exception {
 
-        logger.info("[METHOD: genRSA() ]: Generando llave privada (2048)");
+        logger.info("[ METHOD: genRSA() ]: Generando llave privada (2048)");
         KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
         keyPairGen.initialize(2048);
 
         KeyPair keyPair = keyPairGen.generateKeyPair();
         PrivateKey privateKey = keyPair.getPrivate();
 
-        logger.info("[METHOD: genRSA() ]: Convertir la llave privada a formato PKCS#8");
+        logger.info("[ METHOD: genRSA() ]: Convertir la llave privada a formato PKCS#8");
         PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(privateKey.getEncoded());
         String privateKeyPem = convertToPEMFormat(pkcs8EncodedKeySpec.getEncoded());
 
-        logger.info("[METHOD: genRSA() ]: Llave generada con exito");
+        logger.info("[ METHOD: genRSA() ]: Llave generada con exito");
         return privateKeyPem;
     }
 

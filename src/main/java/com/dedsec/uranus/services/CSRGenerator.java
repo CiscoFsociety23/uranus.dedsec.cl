@@ -22,14 +22,14 @@ public class CSRGenerator {
     private final Logger logger = LoggerFactory.getLogger(CSRGenerator.class);
 
     public String generarCSR(String pemPrivateKey, String nombre, String email) throws Exception {
-        logger.info("[METHOD: generarCSR() ]: Convirtiendo llave pem a objeto private key");
+        logger.info("[ METHOD: generarCSR() ]: Convirtiendo llave pem a objeto private key");
         PrivateKey privateKey = getPrivateKeyFromPem(pemPrivateKey);
 
-        logger.info("[METHOD: generarCSR() ]: Generando CSR");
+        logger.info("[ METHOD: generarCSR() ]: Generando CSR");
         String subjectDN = "CN=" + nombre + ", O=Dedsec Corp, OU=Certificados Personales, L=Santiago, ST=Region Metropolitana, C=CL, EMAILADDRESS=" + email;
         String csrPem = generateCSR(privateKey, subjectDN);
 
-        logger.info("[METHOD: generarCSR() ]: CSR generado con exito");
+        logger.info("[ METHOD: generarCSR() ]: CSR generado con exito");
         return csrPem;
     }
 

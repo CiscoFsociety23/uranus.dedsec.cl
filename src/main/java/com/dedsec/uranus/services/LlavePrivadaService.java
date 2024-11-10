@@ -21,17 +21,17 @@ public class LlavePrivadaService {
     private RSAKeyGenerator rsaKeyGenerator = new RSAKeyGenerator();
 
     public List<LlavePrivada> obtenerLlavesPrivadas(){
-        logger.info("[METHOD: obtenerLlavesPrivadas() ]: Obteniendo listado de llaves");
+        logger.info("[ METHOD: obtenerLlavesPrivadas() ]: Obteniendo listado de llaves");
         return llavePrivadaRepository.findAll();
     }
 
     public LlavePrivada generarLlave(){
         try {
-            logger.info("[METHOD: generarLlave() ]: Solicitando llave privada");
+            logger.info("[ METHOD: generarLlave() ]: Solicitando llave privada");
             String llave = rsaKeyGenerator.genRSA();
             LlavePrivada llavePrivada = new LlavePrivada();
             llavePrivada.setLlave(llave);
-            logger.info("[METHOD: generarLlave() ]: Guardando Registro de la llave privada");
+            logger.info("[ METHOD: generarLlave() ]: Guardando Registro de la llave privada");
             llavePrivadaRepository.save(llavePrivada);
             return llavePrivada;
         } catch (Exception e) {
