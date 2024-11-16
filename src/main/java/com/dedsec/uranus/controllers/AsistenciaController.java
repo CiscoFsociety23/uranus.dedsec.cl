@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dedsec.uranus.dto.LogInData;
 import com.dedsec.uranus.models.asistencia.Empleado;
 import com.dedsec.uranus.services.asistencia.EmpleadosService;
 
@@ -37,5 +38,11 @@ public class AsistenciaController {
         return empleado;
     }
     
+    @PostMapping("/verificarAcceso")
+    public Boolean verificarAcceso(@RequestBody LogInData logInData) {
+        logger.info("[ POST /AsistenciaManager/verificarAcceso ]: Verificando accesos del usuario");
+        Boolean access = empleadosService.verificarCredenciales(logInData.getCorreo(), logInData.getContrasena());
+        return access;
+    }
 
 }

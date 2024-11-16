@@ -22,7 +22,10 @@ public class Empleado {
     private Integer idEmpleado;
 
     @Basic
+    private String rut;
     private String nombre;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
     private String correo;
     private String contrasena;
 
