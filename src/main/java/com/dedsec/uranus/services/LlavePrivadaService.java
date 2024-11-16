@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.dedsec.uranus.models.LlavePrivada;
+import com.dedsec.uranus.models.certimanager.LlavePrivada;
 import com.dedsec.uranus.repositories.LlavePrivadaRepository;
 
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.dedsec.uranus.models;
+package com.dedsec.uranus.models.certimanager;
 import jakarta.persistence.*;
 import lombok.*;
 

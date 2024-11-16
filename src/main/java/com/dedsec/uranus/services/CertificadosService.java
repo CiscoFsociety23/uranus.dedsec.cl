@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.dedsec.uranus.models.Certificado;
+import com.dedsec.uranus.models.certimanager.Certificado;
 import com.dedsec.uranus.repositories.CertificadoRepository;
 
 import lombok.RequiredArgsConstructor;

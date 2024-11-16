@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.dedsec.uranus.middlewares.CertiManagerMiddleware;
-import com.dedsec.uranus.models.Certificado;
-import com.dedsec.uranus.models.LlavePrivada;
-import com.dedsec.uranus.models.SolicitudCertificado;
+import com.dedsec.uranus.models.certimanager.Certificado;
+import com.dedsec.uranus.models.certimanager.LlavePrivada;
+import com.dedsec.uranus.models.certimanager.SolicitudCertificado;
 import com.dedsec.uranus.services.CertificadosService;
 import com.dedsec.uranus.services.LlavePrivadaService;
 import com.dedsec.uranus.services.PropertyService;
