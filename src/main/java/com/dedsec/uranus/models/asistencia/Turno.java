@@ -1,6 +1,6 @@
 package com.dedsec.uranus.models.asistencia;
 
-import java.util.Date;
+import java.sql.Time;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
@@ -23,8 +23,8 @@ public class Turno {
 
     @Basic
     private String turno;
-    private Date horaTurnoEntrada;
-    private Date horaTurnoSalida;
+    private Time horaTurnoEntrada;
+    private Time horaTurnoSalida;
     private Integer cantidadDeHoras;
 
 }

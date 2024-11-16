@@ -1,5 +1,6 @@
 package com.dedsec.uranus.models.asistencia;
 
+import java.sql.Time;
 import java.util.Date;
 
 import jakarta.persistence.Basic;
@@ -25,8 +26,8 @@ public class Asistencia {
 
     @Basic
     private Date fechaMarcaje;
-    private Date horaEntrada;
-    private Date horaSalida;
+    private Time horaEntrada;
+    private Time horaSalida;
 
     @ManyToOne
     @JoinColumn(name = "idEmpleado", nullable = false)

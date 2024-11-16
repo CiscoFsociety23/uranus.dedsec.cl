@@ -43,14 +43,6 @@ public class Empleado {
     private Direccion direccion;
 
     @ManyToOne
-    @JoinColumn(name = "idComuna", nullable = false)
-    private Comuna comuna;
-
-    @ManyToOne
-    @JoinColumn(name = "idRegion", nullable = false)
-    private Region region;
-
-    @ManyToOne
     @JoinColumn(name = "idDepartamento", nullable = false)
     private Departamento departamento;
 

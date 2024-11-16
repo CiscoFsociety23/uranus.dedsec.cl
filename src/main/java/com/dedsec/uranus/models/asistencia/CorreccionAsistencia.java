@@ -1,5 +1,6 @@
 package com.dedsec.uranus.models.asistencia;
 
+import java.sql.Time;
 import java.util.Date;
 
 import jakarta.persistence.Basic;
@@ -26,8 +27,8 @@ public class CorreccionAsistencia {
     @Basic
     private String tipoCorreccion;
     private Date fechaCorreccion;
-    private Date horaEntrada;
-    private Date horaSalida;
+    private Time horaEntrada;
+    private Time horaSalida;
 
     @ManyToOne
     @JoinColumn(name = "idAsistencia", nullable = false)
