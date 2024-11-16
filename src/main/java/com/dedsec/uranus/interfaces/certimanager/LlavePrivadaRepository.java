@@ -1,4 +1,4 @@
-package com.dedsec.uranus.repositories;
+package com.dedsec.uranus.interfaces.certimanager;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
