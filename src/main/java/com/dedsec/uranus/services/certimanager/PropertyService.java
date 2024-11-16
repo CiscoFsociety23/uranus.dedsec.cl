@@ -1,4 +1,4 @@
-package com.dedsec.uranus.services;
+package com.dedsec.uranus.services.certimanager;
 
 import java.util.Optional;
 
