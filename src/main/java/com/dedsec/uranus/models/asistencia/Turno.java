@@ -1,12 +1,12 @@
-package com.dedsec.uranus.models;
+package com.dedsec.uranus.models.asistencia;
+
+import java.sql.Time;
 
 import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,17 +15,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Property {
+public class Turno {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idTurno;
 
     @Basic
-    private String prop;
-
-    @Lob
-    @Column(columnDefinition = "TEXT")
-    private String value;
+    private String turno;
+    private Time horaTurnoEntrada;
+    private Time horaTurnoSalida;
+    private Integer cantidadDeHoras;
 
 }

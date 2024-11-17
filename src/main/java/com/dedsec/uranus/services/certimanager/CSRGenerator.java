@@ -1,4 +1,4 @@
-package com.dedsec.uranus.services;
+package com.dedsec.uranus.services.certimanager;
 
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.operator.ContentSigner;

@@ -1,4 +1,4 @@
-package com.dedsec.uranus.services;
+package com.dedsec.uranus.services.certimanager;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.dedsec.uranus.models.LlavePrivada;
-import com.dedsec.uranus.models.SolicitudCertificado;
-import com.dedsec.uranus.repositories.SolicitudCertificadoRepository;
+import com.dedsec.uranus.interfaces.certimanager.SolicitudCertificadoRepository;
+import com.dedsec.uranus.models.certimanager.LlavePrivada;
+import com.dedsec.uranus.models.certimanager.SolicitudCertificado;
 
 import lombok.RequiredArgsConstructor;
 
