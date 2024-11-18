@@ -1,4 +1,4 @@
-package com.dedsec.uranus.controllers;
+package com.dedsec.uranus.controllers.asistencia;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dedsec.uranus.dto.EmpleadoCreationRequest;
 import com.dedsec.uranus.dto.EmpleadoResponse;
-import com.dedsec.uranus.dto.LogInData;
 import com.dedsec.uranus.models.asistencia.Comuna;
 import com.dedsec.uranus.models.asistencia.Contrato;
 import com.dedsec.uranus.models.asistencia.Departamento;
@@ -33,8 +32,8 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/AsistenciaManager")
-public class AsistenciaController {
+@RequestMapping("/AsistenciaManager/Empleado")
+public class EmpleadoController {
 
     private final Logger logger = LoggerFactory.getLogger(AsistenciaController.class);
     private final EmpleadosService empleadosService;
@@ -48,7 +47,7 @@ public class AsistenciaController {
     @GetMapping("/getAllEmpleados")
     public List<EmpleadoResponse> getAllEmpleados(){
         try {
-            logger.info("[ GET /AsistenciaManager/getAllEmpleados ]: Solicitud de listado total empleados.");
+            logger.info("[ GET /AsistenciaManager/Empleado/getAllEmpleados ]: Solicitud de listado total empleados.");
             List<Empleado> empleados = empleadosService.getAllEmpleados();
             List<EmpleadoResponse> empleadoResponses = new ArrayList<>();
             for(Empleado empleado : empleados){
@@ -70,7 +69,7 @@ public class AsistenciaController {
             }
             return empleadoResponses;
         } catch (Exception e) {
-            logger.error("[ GET /AsistenciaManager/getAllEmpleados ]: Ha occurrido un error al procesar la solicitud: " + e.getMessage());
+            logger.error("[ GET /AsistenciaManager/Empleado/getAllEmpleados ]: Ha occurrido un error al procesar la solicitud: " + e.getMessage());
             return null;
         }
     }
@@ -78,7 +77,7 @@ public class AsistenciaController {
     @PostMapping("/createEmpleado")
     public EmpleadoResponse createEmpleado(@RequestBody EmpleadoCreationRequest dataEmpleado) {
         try {
-            logger.info("[ POST /AsistenciaManager/createEmpleado ]: Procesando solicitud de creacion de empleado");
+            logger.info("[ POST /AsistenciaManager/Empleado/createEmpleado ]: Procesando solicitud de creacion de empleado");
             Contrato contrato = contratoService.guardarContrato(dataEmpleado.getContrato());
             Rol rol = rolService.obtenerRol(dataEmpleado.getRol());
             Departamento departamento = departamentoService.obtenerDepartamento(dataEmpleado.getDepartamento());
@@ -98,7 +97,7 @@ public class AsistenciaController {
             saveEmpleado.setTurno(turno);
             saveEmpleado.setDireccion(direccion);
             Empleado empleado = empleadosService.createEmpleado(saveEmpleado);
-            logger.info("[ POST /AsistenciaManager/createEmpleado ]: Usuario creado con exito");
+            logger.info("[ POST /AsistenciaManager/Empleado/createEmpleado ]: Usuario creado con exito");
             EmpleadoResponse user = new EmpleadoResponse();
             user.setIdEmpleado(empleado.getIdEmpleado());
             user.setRut(empleado.getRut());
@@ -115,16 +114,9 @@ public class AsistenciaController {
             user.setDepartamento(empleado.getDepartamento().getNombreDepartamento());
             return user;
         } catch (Exception e) {
-            logger.error("[ POST /AsistenciaManager/createEmpleado ]: Ha ocurrido un error al crear el usuario: " + e.getMessage());
+            logger.error("[ POST /AsistenciaManager/Empleado/createEmpleado ]: Ha ocurrido un error al crear el usuario: " + e.getMessage());
             return null;
         }
-    }
-    
-    @PostMapping("/verificarAcceso")
-    public Boolean verificarAcceso(@RequestBody LogInData logInData) {
-        logger.info("[ POST /AsistenciaManager/verificarAcceso ]: Verificando accesos del usuario");
-        Boolean access = empleadosService.verificarCredenciales(logInData.getCorreo(), logInData.getContrasena());
-        return access;
     }
 
 }
