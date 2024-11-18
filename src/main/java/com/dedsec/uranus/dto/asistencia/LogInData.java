@@ -1,4 +1,4 @@
-package com.dedsec.uranus.dto;
+package com.dedsec.uranus.dto.asistencia;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

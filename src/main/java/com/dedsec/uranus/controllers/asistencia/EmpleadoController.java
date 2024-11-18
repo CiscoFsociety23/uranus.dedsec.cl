@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dedsec.uranus.dto.EmpleadoCreationRequest;
-import com.dedsec.uranus.dto.EmpleadoResponse;
+import com.dedsec.uranus.dto.asistencia.EmpleadoCreationRequest;
+import com.dedsec.uranus.dto.asistencia.EmpleadoResponse;
 import com.dedsec.uranus.models.asistencia.Comuna;
 import com.dedsec.uranus.models.asistencia.Contrato;
 import com.dedsec.uranus.models.asistencia.Departamento;
