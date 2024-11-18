@@ -20,15 +20,25 @@ public class EmpleadosService {
     private final EmpleadoRepository empleadoRepository;
 
     public List<Empleado> getAllEmpleados(){
-        logger.info("[ METHOD: getAllEmpleados() ]: Obtiendo listados de empleados.");
-        List<Empleado> empleados = empleadoRepository.findAll();
-        return empleados;
+        try {
+            logger.info("[ METHOD: getAllEmpleados() ]: Obtiendo listados de empleados.");
+            List<Empleado> empleados = empleadoRepository.findAll();
+            return empleados;
+        } catch (Exception e) {
+            logger.error("[ METHOD: getAllEmpleados() ]: Ha ocurrido un error al obener los usuarios: " + e.getMessage());
+            return null;
+        }
     }
 
     public Empleado createEmpleado(Empleado dataEmpleado){
-        logger.info("[ METHOD: createEmpleado() ]: Creando usuario en el sistema");
-        Empleado empleado = empleadoRepository.save(dataEmpleado);
-        return empleado;
+        try {
+            logger.info("[ METHOD: createEmpleado() ]: Creando usuario en el sistema");
+            Empleado empleado = empleadoRepository.save(dataEmpleado);
+            return empleado;
+        } catch (Exception e) {
+            logger.error("[ METHOD: createEmpleado() ]: Ha ocurrido un error al crear el usuario: " + e.getMessage());
+            return null;
+        }
     }
 
     public Boolean verificarCredenciales(String dataCorreo, String dataContrasena){
