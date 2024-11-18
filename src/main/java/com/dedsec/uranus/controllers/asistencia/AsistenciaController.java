@@ -21,9 +21,14 @@ public class AsistenciaController {
 
     @PostMapping("/verificarAcceso")
     public Boolean verificarAcceso(@RequestBody LogInData logInData) {
-        logger.info("[ POST /AsistenciaManager/verificarAcceso ]: Verificando accesos del usuario");
-        Boolean access = empleadosService.verificarCredenciales(logInData.getCorreo(), logInData.getContrasena());
-        return access;
+        try {
+            logger.info("[ POST /AsistenciaManager/verificarAcceso ]: Verificando accesos del usuario");
+            Boolean access = empleadosService.verificarCredenciales(logInData.getCorreo(), logInData.getContrasena());
+            return access;
+        } catch (Exception e) {
+            logger.info("[ POST /AsistenciaManager/verificarAcceso ]: Ha ocurrido un error al verificar el acceso: " + e.getMessage());
+            return false;
+        }
     }
 
 }
