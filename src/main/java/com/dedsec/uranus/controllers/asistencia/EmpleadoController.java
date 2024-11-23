@@ -5,10 +5,13 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dedsec.uranus.dto.asistencia.EmpleadoCreationRequest;
@@ -71,6 +74,32 @@ public class EmpleadoController {
         } catch (Exception e) {
             logger.error("[ GET /AsistenciaManager/Empleado/getAllEmpleados ]: Ha occurrido un error al procesar la solicitud: " + e.getMessage());
             return null;
+        }
+    }
+
+    @GetMapping("/getEmpleadoByCorreo")
+    public ResponseEntity<?> getEmpleado(@RequestParam String correo){
+        try {
+            logger.info("[ GET /AsistenciaManager/Empleado/getEmpleadoByCorreo ]: Procesando obtencion de empleado " + correo);
+            Empleado empleado = empleadosService.getEmpleadoByCorreo(correo);
+            EmpleadoResponse user = new EmpleadoResponse();
+            user.setIdEmpleado(empleado.getIdEmpleado());
+            user.setRut(empleado.getRut());
+            user.setNombre(empleado.getNombre());
+            user.setApellidoPaterno(empleado.getApellidoPaterno());
+            user.setApellidoMaterno(empleado.getApellidoMaterno());
+            user.setCorreo(empleado.getCorreo());
+            user.setContrato(empleado.getContrato().getTipoContrato());
+            user.setRol(empleado.getRol().getRol());
+            user.setTurno(empleado.getTurno().getTurno());
+            user.setHoraEntrada(empleado.getTurno().getHoraTurnoEntrada());
+            user.setHoraSalida(empleado.getTurno().getHoraTurnoSalida());
+            user.setDireccion(empleado.getDireccion().getDireccion() + ", " + empleado.getDireccion().getComuna().getNombreComuna() + "; " + empleado.getDireccion().getComuna().getRegion().getRegion());
+            user.setDepartamento(empleado.getDepartamento().getNombreDepartamento());
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("[ GET /AsistenciaManager/Empleado/getEmpleadoByCorreo ]: Ha ocurrido un error en la obtencion del empleado: " + e.getMessage());
+            return new ResponseEntity<>(false, HttpStatus.OK);
         }
     }
 

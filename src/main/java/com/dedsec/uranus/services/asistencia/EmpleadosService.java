@@ -30,6 +30,24 @@ public class EmpleadosService {
         }
     }
 
+    public Empleado getEmpleadoByCorreo(String correo){
+        try {
+            logger.info("[ METHOD: getEmpleadoByCorreo() ]: Obteniendo empleado " + correo);
+            Optional<Empleado> getEmpleado = empleadoRepository.findByCorreo(correo);
+            if(getEmpleado.isPresent()){
+                logger.info("[ METHOD: getEmpleadoByCorreo() ]: Empleado " + correo + " obtenido con exito");
+                Empleado empleado = getEmpleado.get();
+                return empleado;
+            } else {
+                logger.error("[ METHOD: getEmpleadoByCorreo() ]: El empleado " + correo + " no existe");
+                return null;
+            }
+        } catch (Exception e) {
+            logger.error("[ METHOD: getEmpleadoByCorreo() ]: Ha ocurrido un error ");
+            return null;
+        }
+    }
+
     public Empleado createEmpleado(Empleado dataEmpleado){
         try {
             logger.info("[ METHOD: createEmpleado() ]: Creando usuario en el sistema");
