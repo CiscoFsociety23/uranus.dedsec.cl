@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,11 +49,11 @@ public class EmpleadoController {
     private final RolService rolService;
     private final TurnoService turnoService;
 
-    @GetMapping("/getAllEmpleados")
-    public ResponseEntity<?> getAllEmpleados(){
+    @GetMapping("/obtenerEmpleados")
+    public ResponseEntity<?> obtenerEmpleados(){
         try {
-            logger.info("[ GET /AsistenciaManager/Empleado/getAllEmpleados ]: Solicitud de listado total empleados.");
-            List<Empleado> empleados = empleadosService.getAllEmpleados();
+            logger.info("[ GET /AsistenciaManager/Empleado/obtenerEmpleados ]: Solicitud de listado total empleados.");
+            List<Empleado> empleados = empleadosService.obtenerEmpleados();
             List<EmpleadoResponse> empleadoResponses = new ArrayList<>();
             for(Empleado empleado : empleados){
                 EmpleadoResponse user = new EmpleadoResponse();
@@ -73,16 +74,16 @@ public class EmpleadoController {
             }
             return new ResponseEntity<>(empleadoResponses, HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("[ GET /AsistenciaManager/Empleado/getAllEmpleados ]: Ha occurrido un error al procesar la solicitud: " + e.getMessage());
+            logger.error("[ GET /AsistenciaManager/Empleado/obtenerEmpleados ]: Ha occurrido un error al procesar la solicitud: " + e.getMessage());
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
     }
 
-    @GetMapping("/getEmpleadoByCorreo")
+    @GetMapping("/obtenerEmpleadoCorreo")
     public ResponseEntity<?> getEmpleado(@RequestParam String correo){
         try {
-            logger.info("[ GET /AsistenciaManager/Empleado/getEmpleadoByCorreo ]: Procesando obtencion de empleado " + correo);
-            Empleado empleado = empleadosService.getEmpleadoByCorreo(correo);
+            logger.info("[ GET /AsistenciaManager/Empleado/obtenerEmpleadoCorreo ]: Procesando obtencion de empleado " + correo);
+            Empleado empleado = empleadosService.obtenerEmpleadoCorreo(correo);
             EmpleadoResponse user = new EmpleadoResponse();
             user.setIdEmpleado(empleado.getIdEmpleado());
             user.setRut(empleado.getRut());
@@ -99,15 +100,15 @@ public class EmpleadoController {
             user.setDepartamento(empleado.getDepartamento().getNombreDepartamento());
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("[ GET /AsistenciaManager/Empleado/getEmpleadoByCorreo ]: Ha ocurrido un error en la obtencion del empleado: " + e.getMessage());
+            logger.error("[ GET /AsistenciaManager/Empleado/obtenerEmpleadoCorreo ]: Ha ocurrido un error en la obtencion del empleado: " + e.getMessage());
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
     }
 
-    @PostMapping("/createEmpleado")
-    public ResponseEntity<?> createEmpleado(@RequestBody EmpleadoCreationRequest dataEmpleado) {
+    @PostMapping("/crearEmpleado")
+    public ResponseEntity<?> crearEmpleado(@RequestBody EmpleadoCreationRequest dataEmpleado) {
         try {
-            logger.info("[ POST /AsistenciaManager/Empleado/createEmpleado ]: Procesando solicitud de creacion de empleado");
+            logger.info("[ POST /AsistenciaManager/Empleado/crearEmpleado ]: Procesando solicitud de creacion de empleado");
             Contrato contrato = contratoService.guardarContrato(dataEmpleado.getContrato());
             Rol rol = rolService.obtenerRol(dataEmpleado.getRol());
             Departamento departamento = departamentoService.obtenerDepartamento(dataEmpleado.getDepartamento());
@@ -126,8 +127,8 @@ public class EmpleadoController {
             saveEmpleado.setDepartamento(departamento);
             saveEmpleado.setTurno(turno);
             saveEmpleado.setDireccion(direccion);
-            Empleado empleado = empleadosService.createEmpleado(saveEmpleado);
-            logger.info("[ POST /AsistenciaManager/Empleado/createEmpleado ]: Usuario creado con exito");
+            Empleado empleado = empleadosService.crearEmpleado(saveEmpleado);
+            logger.info("[ POST /AsistenciaManager/Empleado/crearEmpleado ]: Usuario creado con exito");
             EmpleadoResponse user = new EmpleadoResponse();
             user.setIdEmpleado(empleado.getIdEmpleado());
             user.setRut(empleado.getRut());
@@ -144,7 +145,51 @@ public class EmpleadoController {
             user.setDepartamento(empleado.getDepartamento().getNombreDepartamento());
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         } catch (Exception e) {
-            logger.error("[ POST /AsistenciaManager/Empleado/createEmpleado ]: Ha ocurrido un error al crear el usuario: " + e.getMessage());
+            logger.error("[ POST /AsistenciaManager/Empleado/crearEmpleado ]: Ha ocurrido un error al crear el usuario: " + e.getMessage());
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/actualizarEmpleado")
+    public ResponseEntity<?> actualizarEmpleado(@RequestBody EmpleadoCreationRequest empleadoRequest){
+        try {
+            logger.info("[ PUT /AsistenciaManager/Empleado/actualizarEmpleado ]: Procesando solicitud de actualizacion usuario: " + empleadoRequest.getCorreo());
+            Contrato contrato = contratoService.guardarContrato(empleadoRequest.getContrato());
+            Rol rol = rolService.obtenerRol(empleadoRequest.getRol());
+            Departamento departamento = departamentoService.obtenerDepartamento(empleadoRequest.getDepartamento());
+            Turno turno = turnoService.obtenerTurno(empleadoRequest.getTurno());
+            Comuna comuna = comunaService.getComuna(empleadoRequest.getComuna());
+            Direccion direccion = direccionService.crearDireccion(empleadoRequest.getDireccion(), comuna);
+            Empleado empleado = empleadosService.obtenerEmpleadoCorreo(empleadoRequest.getCorreo());
+            empleado.setRut(empleadoRequest.getRut());
+            empleado.setNombre(empleadoRequest.getNombre());
+            empleado.setApellidoPaterno(empleadoRequest.getApellidoPaterno());
+            empleado.setApellidoMaterno(empleadoRequest.getApellidoMaterno());
+            empleado.setCorreo(empleadoRequest.getCorreo());
+            empleado.setContrasena(empleadoRequest.getContrasena());
+            empleado.setContrato(contrato);
+            empleado.setRol(rol);
+            empleado.setDepartamento(departamento);
+            empleado.setTurno(turno);
+            empleado.setDireccion(direccion);
+            Empleado employee = empleadosService.actualizarEmpleado(empleado);
+            EmpleadoResponse user = new EmpleadoResponse();
+            user.setIdEmpleado(employee.getIdEmpleado());
+            user.setRut(employee.getRut());
+            user.setNombre(employee.getNombre());
+            user.setApellidoPaterno(employee.getApellidoPaterno());
+            user.setApellidoMaterno(employee.getApellidoMaterno());
+            user.setCorreo(employee.getCorreo());
+            user.setContrato(employee.getContrato().getTipoContrato());
+            user.setRol(employee.getRol().getRol());
+            user.setTurno(employee.getTurno().getTurno());
+            user.setHoraEntrada(employee.getTurno().getHoraTurnoEntrada());
+            user.setHoraSalida(employee.getTurno().getHoraTurnoSalida());
+            user.setDireccion(employee.getDireccion().getDireccion() + ", " + employee.getDireccion().getComuna().getNombreComuna() + "; " + employee.getDireccion().getComuna().getRegion().getRegion());
+            user.setDepartamento(employee.getDepartamento().getNombreDepartamento());
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("[ PUT /AsistenciaManager/Empleado/actualizarEmpleado ]: Ha ocurrido un error al procesar la solicitud", e);
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
     }

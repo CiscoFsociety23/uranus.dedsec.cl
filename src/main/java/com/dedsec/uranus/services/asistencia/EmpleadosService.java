@@ -19,42 +19,53 @@ public class EmpleadosService {
     private final Logger logger = LoggerFactory.getLogger(EmpleadosService.class);
     private final EmpleadoRepository empleadoRepository;
 
-    public List<Empleado> getAllEmpleados(){
+    public List<Empleado> obtenerEmpleados(){
         try {
-            logger.info("[ METHOD: getAllEmpleados() ]: Obtiendo listados de empleados.");
+            logger.info("[ METHOD: obtenerEmpleados() ]: Obtiendo listados de empleados.");
             List<Empleado> empleados = empleadoRepository.findAll();
             return empleados;
         } catch (Exception e) {
-            logger.error("[ METHOD: getAllEmpleados() ]: Ha ocurrido un error al obener los usuarios: " + e.getMessage());
+            logger.error("[ METHOD: obtenerEmpleados() ]: Ha ocurrido un error al obener los usuarios: " + e.getMessage());
             return null;
         }
     }
 
-    public Empleado getEmpleadoByCorreo(String correo){
+    public Empleado obtenerEmpleadoCorreo(String correo){
         try {
-            logger.info("[ METHOD: getEmpleadoByCorreo() ]: Obteniendo empleado " + correo);
+            logger.info("[ METHOD: obtenerEmpleadoCorreo() ]: Obteniendo empleado " + correo);
             Optional<Empleado> getEmpleado = empleadoRepository.findByCorreo(correo);
             if(getEmpleado.isPresent()){
-                logger.info("[ METHOD: getEmpleadoByCorreo() ]: Empleado " + correo + " obtenido con exito");
+                logger.info("[ METHOD: obtenerEmpleadoCorreo() ]: Empleado " + correo + " obtenido con exito");
                 Empleado empleado = getEmpleado.get();
                 return empleado;
             } else {
-                logger.error("[ METHOD: getEmpleadoByCorreo() ]: El empleado " + correo + " no existe");
+                logger.error("[ METHOD: obtenerEmpleadoCorreo() ]: El empleado " + correo + " no existe");
                 return null;
             }
         } catch (Exception e) {
-            logger.error("[ METHOD: getEmpleadoByCorreo() ]: Ha ocurrido un error ");
+            logger.error("[ METHOD: obtenerEmpleadoCorreo() ]: Ha ocurrido un error ");
             return null;
         }
     }
 
-    public Empleado createEmpleado(Empleado dataEmpleado){
+    public Empleado crearEmpleado(Empleado dataEmpleado){
         try {
-            logger.info("[ METHOD: createEmpleado() ]: Creando usuario en el sistema");
+            logger.info("[ METHOD: crearEmpleado() ]: Creando usuario en el sistema");
             Empleado empleado = empleadoRepository.save(dataEmpleado);
             return empleado;
         } catch (Exception e) {
-            logger.error("[ METHOD: createEmpleado() ]: Ha ocurrido un error al crear el usuario: " + e.getMessage());
+            logger.error("[ METHOD: crearEmpleado() ]: Ha ocurrido un error al crear el usuario: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public Empleado actualizarEmpleado(Empleado empleado){
+        try {
+            logger.info("[ METHOD: actualizarEmpleado() ]: Actualizando el usuario con ID: " + empleado.getIdEmpleado());
+            Empleado update = empleadoRepository.save(empleado);
+            return update;
+        } catch (Exception e) {
+            logger.error("[ METHOD: actualizarEmpleado() ]: Ha ocurrido un error al actualizar el usuario", e);
             return null;
         }
     }
