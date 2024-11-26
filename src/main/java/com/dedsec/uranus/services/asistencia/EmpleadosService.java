@@ -59,6 +59,18 @@ public class EmpleadosService {
         }
     }
 
+    public Boolean borrarEmpleado(Integer idEmpleado){
+        try {
+            logger.info("[ METHOD: borrarEmpleado() ]: Eliminado usuario con ID: " + idEmpleado);
+            empleadoRepository.deleteById(idEmpleado);
+            logger.info("[ METHOD: borrarEmpleado() ]: Empleado eliminado con exito");
+            return true;
+        } catch (Exception e) {
+            logger.error("[ METHOD: borrarEmpleado() ]: Ha ocurrido un error al eleminiar el empleado", e);
+            return false;
+        }
+    }
+
     public Boolean verificarCredenciales(String dataCorreo, String dataContrasena){
         try {
             logger.info("[ METHOD: verificarCredenciales() ]: Verificando credenciales del usuario " + dataCorreo);
