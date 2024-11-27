@@ -1,4 +1,4 @@
-package com.dedsec.uranus.controllers;
+package com.dedsec.uranus.controllers.certimanager;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
