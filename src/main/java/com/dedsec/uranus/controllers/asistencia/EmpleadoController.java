@@ -105,6 +105,33 @@ public class EmpleadoController {
         }
     }
 
+    @GetMapping("/obtenerEmpleadoRut")
+    public ResponseEntity<?> obtenerEmpleadoRut(@RequestParam String rut){
+        try {
+            logger.info("[ GET /AsistenciaManager/Empleado/obtenerEmpleadoRut ]: Procesando obtencion de empleado " + rut);
+            Empleado empleado = empleadosService.obtenerEmpleadoRut(rut);
+            EmpleadoResponse empleadoResponse = new EmpleadoResponse();
+            empleadoResponse.setIdEmpleado(empleado.getIdEmpleado());
+            empleadoResponse.setRut(empleado.getRut());
+            empleadoResponse.setNombre(empleado.getNombre());
+            empleadoResponse.setApellidoPaterno(empleado.getApellidoPaterno());
+            empleadoResponse.setApellidoMaterno(empleado.getApellidoMaterno());
+            empleadoResponse.setCorreo(empleado.getCorreo());
+            empleadoResponse.setContrato(empleado.getContrato().getTipoContrato());
+            empleadoResponse.setRol(empleado.getRol().getRol());
+            empleadoResponse.setTurno(empleado.getTurno().getTurno());
+            empleadoResponse.setHoraEntrada(empleado.getTurno().getHoraTurnoEntrada());
+            empleadoResponse.setHoraSalida(empleado.getTurno().getHoraTurnoSalida());
+            empleadoResponse.setDireccion(empleado.getDireccion().getDireccion() + ", " + empleado.getDireccion().getComuna().getNombreComuna() + "; " + empleado.getDireccion().getComuna().getRegion().getRegion());
+            empleadoResponse.setDepartamento(empleado.getDepartamento().getNombreDepartamento());
+            return new ResponseEntity<>(empleadoResponse, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("[ GET /AsistenciaManager/Empleado/obtenerEmpleadoRut ]: Ha ocurrido un error en la obtencion del empleado: " + e.getMessage());
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+    }
+        
+
     @PostMapping("/crearEmpleado")
     public ResponseEntity<?> crearEmpleado(@RequestBody EmpleadoCreationRequest dataEmpleado) {
         try {

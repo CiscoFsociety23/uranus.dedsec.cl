@@ -48,6 +48,24 @@ public class EmpleadosService {
         }
     }
 
+    public Empleado obtenerEmpleadoRut(String rut){
+        try {
+            logger.info("[ METHOD: obtenerEmpleadoRut() ]: Obteniendo empleado con rut " + rut);
+            Optional<Empleado> getEmpleado = empleadoRepository.findByRut(rut);
+            if(getEmpleado.isPresent()){
+                logger.info("[ METHOD: obtenerEmpleadoRut() ]: Empleado encrontrado con exito");
+                Empleado empleado = getEmpleado.get();
+                return empleado;
+            } else {
+                logger.error("[ METHOD: obtenerEmpleadoRut() ]: El empleado " + rut + " no existe");
+                return null;
+            }
+        } catch (Exception e) {
+            logger.error("[ METHOD: obtenerEmpleadoRut() ]: Ha ocurrido un error", e);
+            return null;
+        }
+    }
+
     public Empleado crearEmpleado(Empleado dataEmpleado){
         try {
             logger.info("[ METHOD: crearEmpleado() ]: Creando usuario en el sistema");
