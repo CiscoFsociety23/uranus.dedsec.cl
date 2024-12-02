@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dedsec.uranus.dto.asistencia.EmpleadoCreationRequest;
 import com.dedsec.uranus.dto.asistencia.EmpleadoResponse;
+import com.dedsec.uranus.middlewares.AsistenciaMiddleware;
 import com.dedsec.uranus.models.asistencia.Comuna;
 import com.dedsec.uranus.models.asistencia.Contrato;
 import com.dedsec.uranus.models.asistencia.Departamento;
@@ -40,8 +41,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/AsistenciaManager/Empleado")
 public class EmpleadoController {
 
-    private final Logger logger = LoggerFactory.getLogger(AsistenciaController.class);
+    private final Logger logger = LoggerFactory.getLogger(EmpleadoController.class);
     private final EmpleadosService empleadosService;
+    private final AsistenciaMiddleware asistenciaMiddleware;
     private final ComunaService comunaService;
     private final DireccionService direccionService;
     private final ContratoService contratoService;
@@ -136,41 +138,47 @@ public class EmpleadoController {
     public ResponseEntity<?> crearEmpleado(@RequestBody EmpleadoCreationRequest dataEmpleado) {
         try {
             logger.info("[ POST /AsistenciaManager/Empleado/crearEmpleado ]: Procesando solicitud de creacion de empleado");
-            Contrato contrato = contratoService.guardarContrato(dataEmpleado.getContrato());
-            Rol rol = rolService.obtenerRol(dataEmpleado.getRol());
-            Departamento departamento = departamentoService.obtenerDepartamento(dataEmpleado.getDepartamento());
-            Turno turno = turnoService.obtenerTurno(dataEmpleado.getTurno());
-            Comuna comuna = comunaService.getComuna(dataEmpleado.getComuna());
-            Direccion direccion = direccionService.crearDireccion(dataEmpleado.getDireccion(), comuna);
-            Empleado saveEmpleado = new Empleado();
-            saveEmpleado.setRut(dataEmpleado.getRut());
-            saveEmpleado.setNombre(dataEmpleado.getNombre());
-            saveEmpleado.setApellidoPaterno(dataEmpleado.getApellidoPaterno());
-            saveEmpleado.setApellidoMaterno(dataEmpleado.getApellidoMaterno());
-            saveEmpleado.setCorreo(dataEmpleado.getCorreo());
-            saveEmpleado.setContrasena(dataEmpleado.getContrasena());
-            saveEmpleado.setContrato(contrato);
-            saveEmpleado.setRol(rol);
-            saveEmpleado.setDepartamento(departamento);
-            saveEmpleado.setTurno(turno);
-            saveEmpleado.setDireccion(direccion);
-            Empleado empleado = empleadosService.crearEmpleado(saveEmpleado);
-            logger.info("[ POST /AsistenciaManager/Empleado/crearEmpleado ]: Usuario creado con exito");
-            EmpleadoResponse user = new EmpleadoResponse();
-            user.setIdEmpleado(empleado.getIdEmpleado());
-            user.setRut(empleado.getRut());
-            user.setNombre(empleado.getNombre());
-            user.setApellidoPaterno(empleado.getApellidoPaterno());
-            user.setApellidoMaterno(empleado.getApellidoMaterno());
-            user.setCorreo(empleado.getCorreo());
-            user.setContrato(empleado.getContrato().getTipoContrato());
-            user.setRol(empleado.getRol().getRol());
-            user.setTurno(empleado.getTurno().getTurno());
-            user.setHoraEntrada(empleado.getTurno().getHoraTurnoEntrada());
-            user.setHoraSalida(empleado.getTurno().getHoraTurnoSalida());
-            user.setDireccion(empleado.getDireccion().getDireccion() + ", " + empleado.getDireccion().getComuna().getNombreComuna() + "; " + empleado.getDireccion().getComuna().getRegion().getRegion());
-            user.setDepartamento(empleado.getDepartamento().getNombreDepartamento());
-            return new ResponseEntity<>(user, HttpStatus.CREATED);
+            Boolean noExiste = asistenciaMiddleware.verificarSiExiste(dataEmpleado.getRut(), dataEmpleado.getCorreo());
+            if(noExiste){
+                Contrato contrato = contratoService.guardarContrato(dataEmpleado.getContrato());
+                Rol rol = rolService.obtenerRol(dataEmpleado.getRol());
+                Departamento departamento = departamentoService.obtenerDepartamento(dataEmpleado.getDepartamento());
+                Turno turno = turnoService.obtenerTurno(dataEmpleado.getTurno());
+                Comuna comuna = comunaService.getComuna(dataEmpleado.getComuna());
+                Direccion direccion = direccionService.crearDireccion(dataEmpleado.getDireccion(), comuna);
+                Empleado saveEmpleado = new Empleado();
+                saveEmpleado.setRut(dataEmpleado.getRut());
+                saveEmpleado.setNombre(dataEmpleado.getNombre());
+                saveEmpleado.setApellidoPaterno(dataEmpleado.getApellidoPaterno());
+                saveEmpleado.setApellidoMaterno(dataEmpleado.getApellidoMaterno());
+                saveEmpleado.setCorreo(dataEmpleado.getCorreo());
+                saveEmpleado.setContrasena(dataEmpleado.getContrasena());
+                saveEmpleado.setContrato(contrato);
+                saveEmpleado.setRol(rol);
+                saveEmpleado.setDepartamento(departamento);
+                saveEmpleado.setTurno(turno);
+                saveEmpleado.setDireccion(direccion);
+                Empleado empleado = empleadosService.crearEmpleado(saveEmpleado);
+                logger.info("[ POST /AsistenciaManager/Empleado/crearEmpleado ]: Usuario creado con exito");
+                EmpleadoResponse user = new EmpleadoResponse();
+                user.setIdEmpleado(empleado.getIdEmpleado());
+                user.setRut(empleado.getRut());
+                user.setNombre(empleado.getNombre());
+                user.setApellidoPaterno(empleado.getApellidoPaterno());
+                user.setApellidoMaterno(empleado.getApellidoMaterno());
+                user.setCorreo(empleado.getCorreo());
+                user.setContrato(empleado.getContrato().getTipoContrato());
+                user.setRol(empleado.getRol().getRol());
+                user.setTurno(empleado.getTurno().getTurno());
+                user.setHoraEntrada(empleado.getTurno().getHoraTurnoEntrada());
+                user.setHoraSalida(empleado.getTurno().getHoraTurnoSalida());
+                user.setDireccion(empleado.getDireccion().getDireccion() + ", " + empleado.getDireccion().getComuna().getNombreComuna() + "; " + empleado.getDireccion().getComuna().getRegion().getRegion());
+                user.setDepartamento(empleado.getDepartamento().getNombreDepartamento());
+                return new ResponseEntity<>(user, HttpStatus.CREATED);
+            } else {
+                logger.error("[ POST /AsistenciaManager/Empleado/crearEmpleado ]: No es posible crear el usuario");
+                return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+            }
         } catch (Exception e) {
             logger.error("[ POST /AsistenciaManager/Empleado/crearEmpleado ]: Ha ocurrido un error al crear el usuario: " + e.getMessage());
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
