@@ -100,27 +100,18 @@ public class EmpleadosService {
         }
     }
 
-    public Boolean verificarCredenciales(String dataCorreo, String dataContrasena){
+    public Boolean verificarIngreso(String dataRut){
         try {
-            logger.info("[ METHOD: verificarCredenciales() ]: Verificando credenciales del usuario " + dataCorreo);
-            Optional<Empleado> empleado = empleadoRepository.findByCorreo(dataCorreo);
+            logger.info("[ METHOD: verificarIngreso() ]: Verificando el accesos del usuario " + dataRut);
+            Optional<Empleado> empleado = empleadoRepository.findByRut(dataRut);
             if(empleado.isPresent()){
-                Empleado user = empleado.get();
-                logger.info("[ METHOD: verificarCredenciales() ]: Usuario encontrado con exito, nombre " + user.getNombre());
-                logger.info("[ METHOD: verificarCredenciales() ]: Comparando contraseñas");
-                if(user.getContrasena().equals(dataContrasena)){
-                    logger.info("[ METHOD: verificarCredenciales() ]: Credenciales ok");
-                    return true;
-                } else {
-                    logger.error("[ METHOD: verificarCredenciales() ]: Contraseña Incorrecta");
-                    return false;
-                }
+                return true;
             } else {
-                logger.error("[ METHOD: verificarCredenciales() ]: No existe usuario " + dataCorreo);
+                logger.error("[ METHOD: verificarIngreso() ]: No existe usuario " + dataRut);
                 return false;
             }
         } catch (Exception e) {
-            logger.error("[ METHOD: verificarCredenciales() ]: Ha ocurrido un error inesperado: " + e.getMessage());
+            logger.error("[ METHOD: verificarIngreso() ]: Ha ocurrido un error inesperado: " + e.getMessage());
             return false;
         }
     }

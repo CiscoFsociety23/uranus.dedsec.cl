@@ -3,11 +3,10 @@ package com.dedsec.uranus.controllers.asistencia;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dedsec.uranus.dto.asistencia.LogInData;
 import com.dedsec.uranus.services.asistencia.EmpleadosService;
 import lombok.RequiredArgsConstructor;
 
@@ -20,10 +19,10 @@ public class AsistenciaController {
     private final EmpleadosService empleadosService;
 
     @PostMapping("/verificarAcceso")
-    public Boolean verificarAcceso(@RequestBody LogInData logInData) {
+    public Boolean verificarAcceso(@RequestParam String rut) {
         try {
             logger.info("[ POST /AsistenciaManager/verificarAcceso ]: Verificando accesos del usuario");
-            Boolean access = empleadosService.verificarCredenciales(logInData.getCorreo(), logInData.getContrasena());
+            Boolean access = empleadosService.verificarIngreso(rut);
             return access;
         } catch (Exception e) {
             logger.info("[ POST /AsistenciaManager/verificarAcceso ]: Ha ocurrido un error al verificar el acceso: " + e.getMessage());
