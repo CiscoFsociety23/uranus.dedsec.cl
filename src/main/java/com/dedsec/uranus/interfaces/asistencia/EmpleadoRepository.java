@@ -12,5 +12,6 @@ import com.dedsec.uranus.models.asistencia.Empleado;
 public interface EmpleadoRepository extends JpaRepository<Empleado, Integer> {
 
     Optional<Empleado> findByCorreo(String correo);
+    Optional<Empleado> findByRut(String rut);
 
 }
