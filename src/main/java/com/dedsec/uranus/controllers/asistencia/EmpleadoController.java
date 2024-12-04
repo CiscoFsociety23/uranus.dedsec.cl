@@ -65,6 +65,7 @@ public class EmpleadoController {
                 user.setApellidoPaterno(empleado.getApellidoPaterno());
                 user.setApellidoMaterno(empleado.getApellidoMaterno());
                 user.setCorreo(empleado.getCorreo());
+                user.setActivo(empleado.getActivo());
                 user.setContrato(empleado.getContrato().getTipoContrato());
                 user.setRol(empleado.getRol().getRol());
                 user.setTurno(empleado.getTurno().getTurno());
@@ -93,6 +94,7 @@ public class EmpleadoController {
             user.setApellidoPaterno(empleado.getApellidoPaterno());
             user.setApellidoMaterno(empleado.getApellidoMaterno());
             user.setCorreo(empleado.getCorreo());
+            user.setActivo(empleado.getActivo());
             user.setContrato(empleado.getContrato().getTipoContrato());
             user.setRol(empleado.getRol().getRol());
             user.setTurno(empleado.getTurno().getTurno());
@@ -119,6 +121,7 @@ public class EmpleadoController {
             empleadoResponse.setApellidoPaterno(empleado.getApellidoPaterno());
             empleadoResponse.setApellidoMaterno(empleado.getApellidoMaterno());
             empleadoResponse.setCorreo(empleado.getCorreo());
+            empleadoResponse.setActivo(empleado.getActivo());
             empleadoResponse.setContrato(empleado.getContrato().getTipoContrato());
             empleadoResponse.setRol(empleado.getRol().getRol());
             empleadoResponse.setTurno(empleado.getTurno().getTurno());
@@ -152,7 +155,7 @@ public class EmpleadoController {
                 saveEmpleado.setApellidoPaterno(dataEmpleado.getApellidoPaterno());
                 saveEmpleado.setApellidoMaterno(dataEmpleado.getApellidoMaterno());
                 saveEmpleado.setCorreo(dataEmpleado.getCorreo());
-                saveEmpleado.setContrasena(dataEmpleado.getContrasena());
+                saveEmpleado.setActivo(dataEmpleado.getActivo());
                 saveEmpleado.setContrato(contrato);
                 saveEmpleado.setRol(rol);
                 saveEmpleado.setDepartamento(departamento);
@@ -167,6 +170,7 @@ public class EmpleadoController {
                 user.setApellidoPaterno(empleado.getApellidoPaterno());
                 user.setApellidoMaterno(empleado.getApellidoMaterno());
                 user.setCorreo(empleado.getCorreo());
+                user.setActivo(empleado.getActivo());
                 user.setContrato(empleado.getContrato().getTipoContrato());
                 user.setRol(empleado.getRol().getRol());
                 user.setTurno(empleado.getTurno().getTurno());
@@ -201,7 +205,7 @@ public class EmpleadoController {
             empleado.setApellidoPaterno(empleadoRequest.getApellidoPaterno());
             empleado.setApellidoMaterno(empleadoRequest.getApellidoMaterno());
             empleado.setCorreo(empleadoRequest.getCorreo());
-            empleado.setContrasena(empleadoRequest.getContrasena());
+            empleado.setActivo(empleadoRequest.getActivo());
             empleado.setContrato(contrato);
             empleado.setRol(rol);
             empleado.setDepartamento(departamento);
@@ -215,6 +219,7 @@ public class EmpleadoController {
             user.setApellidoPaterno(employee.getApellidoPaterno());
             user.setApellidoMaterno(employee.getApellidoMaterno());
             user.setCorreo(employee.getCorreo());
+            user.setActivo(employee.getActivo());
             user.setContrato(employee.getContrato().getTipoContrato());
             user.setRol(employee.getRol().getRol());
             user.setTurno(employee.getTurno().getTurno());
