@@ -27,7 +27,7 @@ public class Empleado {
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String correo;
-    private String contrasena;
+    private Boolean activo;
 
     @ManyToOne
     @JoinColumn(name = "idRol", nullable = false)

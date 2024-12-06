@@ -1,6 +1,7 @@
 package com.dedsec.uranus.models.asistencia;
 
 import java.util.Date;
+import java.sql.Time;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
@@ -17,17 +18,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Ausencia {
+public class Atrasos {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idAusencia;
+    private Integer idAtraso;
 
     @Basic
     private Date fechaRegistro;
-    
+    private Time horaEntrada;
+
     @ManyToOne
-    @JoinColumn(name = "idEmpleado", nullable = false)
+    @JoinColumn(name = "idEmpleado")
     private Empleado empleado;
 
 }

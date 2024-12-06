@@ -27,7 +27,7 @@ public class AsistenciaMiddleware {
                 logger.info("[ METHOD: obtenerEmpleadoRut() ]: No se puede crear el usuario, los datos ya estan siendo opcupados");
                 return false;
             } else {
-                logger.error("[ METHOD: verificarSiExiste() ]: Los datos pueden ser asignados");
+                logger.info("[ METHOD: verificarSiExiste() ]: Los datos pueden ser asignados");
                 return true;
             }
         } catch (Exception e) {

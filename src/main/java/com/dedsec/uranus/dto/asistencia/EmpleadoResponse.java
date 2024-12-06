@@ -17,6 +17,7 @@ public class EmpleadoResponse {
     private String apellidoMaterno;
     private String apellidoPaterno;
     private String correo;
+    private Boolean activo;
     private String contrato;
     private String rol;
     private String departamento;

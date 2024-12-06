@@ -1,5 +1,6 @@
 package com.dedsec.uranus.services.asistencia;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -17,6 +18,22 @@ public class TurnoService {
 
     private final Logger logger = LoggerFactory.getLogger(TurnoService.class);
     private final TurnoRepository turnoRepository;
+
+    public List<Turno> obtenerTurnos(){
+        try {
+            logger.info("[ METHOD: obtenerTurnos() ]: Obteniendo listado de turnos");
+            List<Turno> turnos = turnoRepository.findAll();
+            if(!turnos.isEmpty()){
+                return turnos;
+            } else {
+                logger.error("[ METHOD: obtenerTurnos() ]: No hay turnos disponibles");
+                return null;
+            }
+        } catch (Exception e) {
+            logger.error("[ METHOD: obtenerTurnos() ]: Ha ocurrido un error al obtner el listado", e);
+            return null;
+        }
+    }
 
     public Turno obtenerTurno(String nombreTurno){
         try {

@@ -14,7 +14,7 @@ public class EmpleadoCreationRequest {
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String correo;
-    private String contrasena;
+    private Boolean activo;
     private String contrato;
     private String rol;
     private String departamento;
