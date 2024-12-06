@@ -1,5 +1,7 @@
 package com.dedsec.uranus.services.asistencia;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -113,6 +115,24 @@ public class EmpleadosService {
         } catch (Exception e) {
             logger.error("[ METHOD: verificarIngreso() ]: Ha ocurrido un error inesperado: " + e.getMessage());
             return false;
+        }
+    }
+
+    public List<Empleado> obtenerEmpleadosSinAsistencia(Date fecha) {
+        try {
+            logger.info("[ METHOD: obtenerEmpleadosSinAsistencia() ]: Obteniendo empleados sin registros de asistencia.");
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(fecha);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            Date fechaTruncada = cal.getTime();
+            List<Empleado> empleadosSinAsistencia = empleadoRepository.findEmpleadosSinAsistenciaPorFecha(fechaTruncada);
+            return empleadosSinAsistencia;
+        } catch (Exception e) {
+            logger.error("[ METHOD: obtenerEmpleadosSinAsistencia() ]: Error al obtener empleados sin asistencia: ", e);
+            return null;
         }
     }
     
