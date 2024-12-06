@@ -26,6 +26,7 @@ public class AsistenciaService {
     private final AsistenciaRepository asistenciaRepository;
     private final AtrasosService atrasosService;
     private final SalidaAnticipadaService salidaAnticipadaService;
+    private final NotificacionService notificacionService;
 
     public Boolean registarMarca(String rut, String tipoMarca) {
         try {
@@ -39,6 +40,7 @@ public class AsistenciaService {
                 asistencia.setEmpleado(empleado);
                 asistenciaRepository.save(asistencia);
                 verificarAtraso(Time.valueOf(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")).substring(0, 8)), empleado);
+                notificacionService.enviarNotificacion(empleado, tipoMarca);
                 return true;
             } else if (tipoMarca.equals("Salida")) {
                 logger.info("[ METHOD: registarMarca() ]: Obteniendo registro del usuario " + empleado.getNombre());
@@ -48,6 +50,7 @@ public class AsistenciaService {
                     asistencia.setHoraSalida(Time.valueOf(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")).substring(0, 8)));
                     asistenciaRepository.save(asistencia);
                     verificarSalidaAnticipada(Time.valueOf(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")).substring(0, 8)), empleado);
+                    notificacionService.enviarNotificacion(empleado, tipoMarca);
                     return true;
                 } else {
                     logger.error("[ METHOD: registarMarca() ]: El usuario no ha registrado la entrada");
