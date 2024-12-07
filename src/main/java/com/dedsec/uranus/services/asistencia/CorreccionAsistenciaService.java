@@ -50,7 +50,7 @@ public class CorreccionAsistenciaService {
                 correccionAsistencia.setAsistencia(asistencia);
                 correccionAsistencia.setFechaCorreccion(new Date());
                 correccionAsistencia.setHoraEntrada(correccion.getHoraEntrada());
-                correccionAsistencia.setHoraSalida(correccion.getHoraEntrada());
+                correccionAsistencia.setHoraSalida(correccion.getHoraSalida());
                 correccionAsistencia.setTipoCorreccion(correccion.getMotivo());
                 correccionAsistenciaRepository.save(correccionAsistencia);
                 return true;
